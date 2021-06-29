@@ -2,10 +2,17 @@ import React from "react"
 import styled from "styled-components"
 import { graphql, useStaticQuery } from "gatsby"
 import { getImage, GatsbyImage } from "gatsby-plugin-image"
+import { useTransition, animated } from "react-spring"
 
 import { FaFacebook, FaInstagram } from "react-icons/fa"
 
 const Hero = () => {
+  const transition = useTransition(true, {
+    from: { x: -100, opacity: 0 },
+    enter: { x: 0, opacity: 1 },
+    delay: 500,
+  })
+
   const data = useStaticQuery(graphql`
     query {
       hand_dog: file(relativePath: { eq: "hand-dog.jpg" }) {
@@ -27,18 +34,32 @@ const Hero = () => {
   return (
     <HeroContainer id="hero">
       <InfoColumn>
-        <TitleWrapper>
-          <Title>Lorem ipsum dolor sit amet</Title>
-          <TitleHr />
-        </TitleWrapper>
-        <Text>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua
-        </Text>
+        {transition(
+          (style, item) =>
+            item && (
+              <animated.div style={style}>
+                <TitleWrapper>
+                  <Title>Lorem ipsum dolor sit amet</Title>
+                  <TitleHr />
+                </TitleWrapper>
+              </animated.div>
+            )
+        )}
+        {transition(
+          (style, item) =>
+            item && (
+              <animated.div style={style}>
+                <Text>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua
+                </Text>
+              </animated.div>
+            )
+        )}
         <SocialMedia>
           <DogWalkingImg image={dog_walking} alt="dog-walking" />
-          <FaFacebook size="30px" color="#005aab" />
-          <FaInstagram size="30px" color="#005aab" />
+          <CustomFacebook size="30px" color="#005aab" />
+          <CustomInstagram size="30px" color="#005aab" />
         </SocialMedia>
       </InfoColumn>
       <ImageColumn>
@@ -119,6 +140,24 @@ const SocialMedia = styled.div`
 
   @media (max-width: 576px) {
     left: 1rem;
+  }
+`
+
+const CustomFacebook = styled(FaFacebook)`
+  transition: all 0.5s;
+  cursor: pointer;
+
+  :hover {
+    transform: scale(1.1);
+  }
+`
+
+const CustomInstagram = styled(FaInstagram)`
+  transition: all 0.5s;
+  cursor: pointer;
+
+  :hover {
+    transform: scale(1.1);
   }
 `
 

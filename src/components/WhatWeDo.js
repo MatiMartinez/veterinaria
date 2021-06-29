@@ -2,8 +2,15 @@ import React from "react"
 import styled from "styled-components"
 import { graphql, useStaticQuery } from "gatsby"
 import { getImage, GatsbyImage } from "gatsby-plugin-image"
+import { useTransition, animated } from "react-spring"
 
 const WhatWeDo = () => {
+  const transition = useTransition(true, {
+    from: { x: +100, opacity: 0 },
+    enter: { x: 0, opacity: 1 },
+    delay: 500,
+  })
+
   const data = useStaticQuery(graphql`
     query {
       hand_dog: file(relativePath: { eq: "happy-cat.jpg" }) {
@@ -22,15 +29,36 @@ const WhatWeDo = () => {
         <FakeImg image={hand_dog} alt="hand-dog" />
       </ImageColumn>
       <InfoColumn>
-        <TitleWrapper>
-          <Title>Lorem ipsum dolor sit amet</Title>
-          <TitleHr />
-        </TitleWrapper>
-        <Text>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua
-        </Text>
-        <GoToLocation>Lorem ipsum dolor</GoToLocation>
+        {transition(
+          (style, item) =>
+            item && (
+              <animated.div style={style}>
+                <TitleWrapper>
+                  <Title>Lorem ipsum dolor sit amet</Title>
+                  <TitleHr />
+                </TitleWrapper>
+              </animated.div>
+            )
+        )}
+        {transition(
+          (style, item) =>
+            item && (
+              <animated.div style={style}>
+                <Text>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua
+                </Text>
+              </animated.div>
+            )
+        )}
+        {transition(
+          (style, item) =>
+            item && (
+              <animated.div style={style}>
+                <GoToLocation>Lorem ipsum dolor</GoToLocation>
+              </animated.div>
+            )
+        )}
       </InfoColumn>
     </WhatWeDoContainer>
   )

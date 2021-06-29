@@ -44,9 +44,10 @@ const FooterContainer = styled.footer`
   }
 
   @media (max-width: 576px) {
-    padding: 4rem 1rem;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    flex-direction: column;
     row-gap: 1rem;
+    padding: 4rem 1rem;
   }
 `
 

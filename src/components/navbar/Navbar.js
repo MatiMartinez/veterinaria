@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 
-import { Link } from "gatsby"
-import { Link as LinkScroll } from "react-scroll"
+import { Link } from "react-scroll"
 import { FaTimes, FaBars } from "react-icons/fa"
 
 export default function Navbar() {
@@ -25,9 +24,21 @@ export default function Navbar() {
     setMenu(!menu)
   }
 
+  function closeMenu() {
+    setMenu(false)
+  }
+
   return (
     <Header scroll={scroll}>
-      <Logo to="/">LOREM</Logo>
+      <Link
+        style={{ color: "#ffffff", fontSize: "1.5rem", fontWeight: "700" }}
+        to="hero"
+        smooth={true}
+        duration={1000}
+        onClick={closeMenu}
+      >
+        LOREM
+      </Link>
       <MobileIcon onClick={handleMenu}>
         {menu ? (
           <FaTimes size="30px" color="#fbfaf9" />
@@ -36,16 +47,28 @@ export default function Navbar() {
         )}
       </MobileIcon>
       <Nav menu={menu}>
-        <NavLink to="hero" smooth={true} duration={1000}>
+        <NavLink to="hero" smooth={true} duration={1000} onClick={closeMenu}>
           Inicio
         </NavLink>
-        <NavLink to="whatwedo" smooth={true} duration={1000}>
+        <NavLink
+          to="whatwedo"
+          smooth={true}
+          duration={1000}
+          onClick={closeMenu}
+        >
           Nosotros
         </NavLink>
-        <NavLink to="services" smooth={true} duration={1000}>
+        <NavLink
+          to="services"
+          smooth={true}
+          duration={1000}
+          onClick={closeMenu}
+        >
           Servicios
         </NavLink>
-        <NavLinkContact to="/contact">Contacto</NavLinkContact>
+        <NavLink to="contact" smooth={true} duration={1000} onClick={closeMenu}>
+          Contacto
+        </NavLink>
       </Nav>
     </Header>
   )
@@ -75,12 +98,6 @@ const Header = styled.header`
   }
 `
 
-const Logo = styled(Link)`
-  font-size: 2rem;
-  font-weight: 900;
-  color: #fbfaf9;
-`
-
 const Nav = styled.nav`
   display: flex;
   align-items: center;
@@ -100,7 +117,7 @@ const Nav = styled.nav`
   }
 `
 
-const NavLink = styled(LinkScroll)`
+const NavLink = styled(Link)`
   font-size: 1rem;
   font-weight: 600;
   color: #fbfaf9;
@@ -109,23 +126,6 @@ const NavLink = styled(LinkScroll)`
   @media (max-width: 768px) {
     font-size: 1.8rem;
     padding: 1rem 0;
-    width: 100%;
-    text-align: center;
-  }
-`
-
-const NavLinkContact = styled(Link)`
-  font-size: 1rem;
-  font-weight: 600;
-  border: 2px solid #fbfaf9;
-  color: #fbfaf9;
-  padding: 0.25rem 1.5rem;
-  border-radius: 10px;
-
-  @media (max-width: 768px) {
-    font-size: 1.8rem;
-    border: none;
-    padding: 1rem 0rem;
     width: 100%;
     text-align: center;
   }
